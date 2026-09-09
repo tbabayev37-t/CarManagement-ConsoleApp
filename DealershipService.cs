@@ -131,7 +131,7 @@ namespace CarDealershipFull
             }
             
         }
-        public void SortingCars()
+        public void SortCars()
         {
             Console.WriteLine("--------Sorting of cars--------");
             Console.WriteLine("1.From cheap to expensive");
