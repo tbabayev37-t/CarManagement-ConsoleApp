@@ -191,6 +191,44 @@ namespace CarDealershipFull
                 Console.WriteLine("Please enter a valid numeric ID!");return;
             }
         }   //masin satmaq
+        public void RentCar()
+        {
+            if (cars.Count == 0)
+            {
+                Console.WriteLine("There are no cars available in the system to rent.");
+                return;
+            }
+
+            Console.WriteLine("-------- Available Cars for Rent --------");
+            PrintCars(cars);
+
+            Console.Write("Enter the Car ID you want to rent: ");
+            string inputId = Console.ReadLine();
+
+            if (int.TryParse(inputId, out int carId))
+            {
+                var carToRent = cars.FirstOrDefault(c => c.ID == carId);
+
+                if (carToRent == null)
+                {
+                    Console.WriteLine("Error: Car with this ID was not found!");
+                    return;
+                }
+                if (carToRent.IsRented)
+                {
+                    Console.WriteLine("Error: This car is already rented out!");
+                    return;
+                }
+                carToRent.IsRented = true;
+                _bank.Deposit(carToRent.SalePrice, $"{carToRent.Brand} {carToRent.Model} rented out");
+
+                Console.WriteLine($"Success! {carToRent.Brand} {carToRent.Model} was rented for {carToRent.SalePrice} AZN.");
+            }
+            else
+            {
+                Console.WriteLine("Please enter a valid numeric ID!");
+            }
+        }   // masin icare
         private void PrintCars(List<Car> carsToPrint)
         {
             if (carsToPrint.Count == 0)
