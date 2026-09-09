@@ -131,6 +131,38 @@ namespace CarDealershipFull
             }
             
         }
+        public void SortingCars()
+        {
+            Console.WriteLine("--------Sorting of cars--------");
+            Console.WriteLine("1.From cheap to expensive");
+            Console.WriteLine("2.From expensive to cheap");
+            Console.WriteLine("3.From old to new");
+            Console.WriteLine("4.From new to old");
+            Console.WriteLine("0.Back");
+            Console.Write("Choose the option:");
+            string choice = Console.ReadLine();
+            switch (choice)
+            {
+                case "1":
+                    var orderByPrice = cars.OrderBy(c=>c.SalePrice).ToList(); 
+                    PrintCars(orderByPrice);break;
+                case "2":
+                    var orderByDescendingPrice = cars.OrderByDescending(c => c.SalePrice).ToList();
+                    PrintCars(orderByDescendingPrice); break;
+                case "3":
+                    var orderByYear = cars.OrderBy(c=>c.Year).ToList();
+                    PrintCars(orderByYear); break;
+                case "4":
+                    var orderByDesYear = cars.OrderByDescending(c => c.Year).ToList();
+                    PrintCars(orderByDesYear); break;
+                case "0":
+                    Console.WriteLine("Returning to the main menu...");
+                    return;
+                default:
+                    Console.WriteLine("Incorrect choice! Try again.");
+                    break;
+            }
+        }
         private void PrintCars(List<Car> carsToPrint)
         {
             if (carsToPrint.Count == 0)
