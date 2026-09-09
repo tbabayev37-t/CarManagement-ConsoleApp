@@ -71,5 +71,80 @@ namespace CarDealershipFull
                 Console.WriteLine($"Car {Ac.ID} | {Ac.Brand} | {Ac.Model}| {Ac.Year}| {Ac.CostPrice}AZN| {Ac.SalePrice}AZN| {Ac.IsRented}");
             }
         }
+        public void DeleteCar()  
+        {
+            if(cars.Count == 0)
+            {
+                Console.WriteLine("There are no machines available in the system.");
+                return;
+            }
+            Console.Write("Enter the deleting car ID: ");
+            int deleteId = Convert.ToInt32(Console.ReadLine());
+            var carToDelete = cars.FirstOrDefault(c=>c.ID == deleteId);
+            if (carToDelete ==null)
+            {
+                throw new ArgumentException("This id machine was not found");
+            }
+            cars.Remove(carToDelete);
+            Console.WriteLine($"{deleteId} ID car was delete");
+        }  //masin silmek
+        public void FilterCars()    // filtrlemek
+        {
+            Console.WriteLine("--------Filtering of cars--------");
+            Console.WriteLine("1.Brand");
+            Console.WriteLine("2.Year");
+            Console.WriteLine("3.Price");
+            Console.WriteLine("0.Back");
+            Console.Write("Choose the option:");
+            string choice = Console.ReadLine();
+            switch (choice)
+            {
+                case "1":
+                    Console.Write("Enter the brand you are looking for: ");
+                    string brand = Console.ReadLine();
+                    var filteredByBrand = cars.Where(c=>c.Brand.Equals(brand,StringComparison.OrdinalIgnoreCase)).ToList();
+                    PrintCars(filteredByBrand); break;
+                case "2":
+                    Console.Write("Enter the minimum year: ");
+                    string year = Console.ReadLine();
+                    if (int.TryParse(year, out int Year))
+                    {
+                        var filterByYear = cars.Where(c=>c.Year >= Year).ToList();
+                        PrintCars(filterByYear); break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Please enter the correct year!");
+                    }
+                    break;
+                case "3":
+                    Console.Write("Enter the maximum price: ");
+                    decimal maxPrice = Convert.ToDecimal(Console.ReadLine());
+                    var filteredByMaxPrice = cars.Where(c=>c.SalePrice <= maxPrice).ToList();
+                    PrintCars(filteredByMaxPrice); break;
+                case "0":
+                    Console.WriteLine("Returning to the main menu...");
+                    return;
+                default:
+                    Console.WriteLine("Incorrect choice! Try again.");
+                    break;
+            }
+            
+        }
+        private void PrintCars(List<Car> carsToPrint)
+        {
+            if (carsToPrint.Count == 0)
+            {
+                Console.WriteLine("\nNo cars found matching these criteria.");
+                return;
+            }
+
+            Console.WriteLine("\n--- Results ---");
+            foreach (var car in carsToPrint)
+            {
+                Console.WriteLine($"ID: {car.ID} | {car.Brand} {car.Model} | Year: {car.Year} | Price: {car.SalePrice} AZN");
+            }
+        }
+
     }
 }
