@@ -162,7 +162,35 @@ namespace CarDealershipFull
                     Console.WriteLine("Incorrect choice! Try again.");
                     break;
             }
-        }
+        }   //cesidlemek
+        public void SellCar()
+        {
+            if (cars.Count == 0)
+            {
+                Console.WriteLine("There are no machines available in the system.");
+                return;
+            }
+            Console.WriteLine("--------Avaliable cars--------");
+            PrintCars(cars);
+            Console.Write("Car Id:");
+            string carId = Console.ReadLine();
+            if (int.TryParse(carId, out int result))
+            {
+                var carToSell = cars.FirstOrDefault(c=>c.ID == result);
+                if (carToSell == null)
+                {
+                    Console.WriteLine("Error: Car with this ID was not found!");
+                    return;
+                }
+                _bank.Deposit(carToSell.SalePrice, $"{carToSell.Brand} {carToSell.Model} sold");
+                cars.Remove(carToSell);
+                Console.WriteLine($"Success! {carToSell.Brand} {carToSell.Model} was sold for {carToSell.SalePrice} AZN.");
+            }
+            else
+            {
+                Console.WriteLine("Please enter a valid numeric ID!");return;
+            }
+        }   //masin satmaq
         private void PrintCars(List<Car> carsToPrint)
         {
             if (carsToPrint.Count == 0)
