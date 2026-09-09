@@ -6,7 +6,7 @@ namespace CarDealershipFull
 {
     public class Bank
     {
-        public decimal Balance { get; private set; } = 500;
+        public decimal Balance { get; private set; } = 500000;
         public Bank(decimal initialBalance)
         {
             Balance = initialBalance;
@@ -39,7 +39,35 @@ namespace CarDealershipFull
                 Date = DateTime.UtcNow
             });
         }
-        public void ShowHistory(decimal balance)
+        public void ShowSalesHistory()
+        {
+            Console.WriteLine("---------- CAR SALES HISTORY ----------");
+            var sales =Transactions.Where(t=>t.Description != null && t.Description.Contains("sold")).ToList();
+            if(sales.Count == 0)
+            {
+                Console.WriteLine("No car sales history found.");
+                return;
+            }
+            foreach(var t in sales)
+            {
+                Console.WriteLine($"Date: {t.Date} | Type: {t.Type} | Amount: {t.Amount} AZN | Desc: {t.Description}");
+            }
+        }
+        public void ShowRentalHistory()
+        {
+            Console.WriteLine("---------- RENTAL INCOME HISTORY ----------");
+            var rental = Transactions.Where(t => t.Description != null && t.Description.Contains("rented")).ToList();
+            if (rental.Count == 0)
+            {
+                Console.WriteLine("No rental history found.");
+                return;
+            }
+            foreach (var t in rental)
+            {
+                Console.WriteLine($"Date: {t.Date} | Type: {t.Type} | Amount: {t.Amount} AZN | Desc: {t.Description}");
+            }
+        }
+        public void ShowHistory()
         {
             Console.WriteLine("----------TRANSACTION HISTORY----------");
             foreach (var t in Transactions)

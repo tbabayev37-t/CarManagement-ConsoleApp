@@ -11,6 +11,10 @@ namespace CarDealershipFull
         public DealershipService(Bank bank)
         {
             _bank = bank;
+
+            cars.Add(new Car { ID = 1, Brand = "BMW", Model = "M5", Year = 2022, CostPrice = 40000, SalePrice = 55000, IsRented = false });
+            cars.Add(new Car { ID = 2, Brand = "Mercedes", Model = "C200", Year = 2020, CostPrice = 25000, SalePrice = 35000, IsRented = false });
+            cars.Add(new Car { ID = 3, Brand = "Toyota", Model = "Camry", Year = 2021, CostPrice = 20000, SalePrice = 28000, IsRented = false });
         }
         public void AddCar()
         {
