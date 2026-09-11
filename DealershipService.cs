@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CarDealershipFull.Excaptions;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -20,31 +21,31 @@ namespace CarDealershipFull
         {
             Console.Write("Car ID: ");
             int carId = Convert.ToInt32(Console.ReadLine());
-            if (carId < 0) throw new ArgumentException("Invalid Id value!");
+            if (carId < 0) throw new ArgumentException("Invalid Id value!");//1
 
             Console.Write("Car Brand: ");
             string brandName = Console.ReadLine();
-            if (string.IsNullOrWhiteSpace(brandName)) throw new ArgumentException("Brand name cannot be empty or whitespace.");
+            if (string.IsNullOrWhiteSpace(brandName)) throw new ArgumentException("Brand name cannot be empty or whitespace.");//2
 
             Console.Write("Car Model: ");
             string model = Console.ReadLine();
-            if (string.IsNullOrWhiteSpace(model)) throw new ArgumentException("Model name cannot be empty or whitespace.");
+            if (string.IsNullOrWhiteSpace(model)) throw new ArgumentException("Model name cannot be empty or whitespace.");//3
 
             Console.Write("Car Year: ");
             int year = Convert.ToInt32(Console.ReadLine());
-            if (year < 0 && year >2026) throw new ArgumentException("Invalid Year!");
+            if (year < 0 || year >2026) throw new ArgumentException("Invalid Year!");//4
 
             Console.Write("Cost price: ");
             int costPrice = Convert.ToInt32(Console.ReadLine());
-            if (costPrice < 0) throw new ArgumentException("Invalid value!");
+            if (costPrice < 0) throw new ArgumentException("Invalid value!");//5
 
             Console.Write("Sale price: ");
             int salePrice = Convert.ToInt32(Console.ReadLine());
-            if (costPrice < 0) throw new ArgumentException("Invalid value!");
+            if (salePrice < 0) throw new ArgumentException("Invalid value!");//6
 
             if (_bank.Balance < costPrice)
             {
-                throw new ArgumentException("There is not enough money in the bank balance!" +
+                throw new InsufficientFundsException("There is not enough money in the bank balance!" +//7
                     "\nThe car cannot be purchased because the showroom does not have enough money. THE SALON IS CLOSING!");
             }
             _bank.Withdraw(costPrice, $"{brandName} {model} purchase price");
@@ -67,8 +68,7 @@ namespace CarDealershipFull
             Console.WriteLine("\n----------Available cars----------");
             if (cars.Count == 0)
             {
-                Console.WriteLine("There are no machines available in the system.");
-                return;
+                throw new CarNotFoundException();
             }
             foreach ( var Ac in cars )
             {
@@ -79,15 +79,14 @@ namespace CarDealershipFull
         {
             if(cars.Count == 0)
             {
-                Console.WriteLine("There are no machines available in the system.");
-                return;
+                throw new CarNotFoundException();
             }
             Console.Write("Enter the deleting car ID: ");
             int deleteId = Convert.ToInt32(Console.ReadLine());
             var carToDelete = cars.FirstOrDefault(c=>c.ID == deleteId);
             if (carToDelete ==null)
             {
-                throw new ArgumentException("This id machine was not found");
+                throw new CarNotFoundException("This id machine was not found");
             }
             cars.Remove(carToDelete);
             Console.WriteLine($"{deleteId} ID car was delete");
@@ -171,8 +170,7 @@ namespace CarDealershipFull
         {
             if (cars.Count == 0)
             {
-                Console.WriteLine("There are no machines available in the system.");
-                return;
+                throw new CarNotFoundException();
             }
             Console.WriteLine("--------Avaliable cars--------");
             PrintCars(cars);
@@ -183,8 +181,7 @@ namespace CarDealershipFull
                 var carToSell = cars.FirstOrDefault(c=>c.ID == result);
                 if (carToSell == null)
                 {
-                    Console.WriteLine("Error: Car with this ID was not found!");
-                    return;
+                    throw new CarNotFoundException("Error: Car with this ID was not found!");
                 }
                 _bank.Deposit(carToSell.SalePrice, $"{carToSell.Brand} {carToSell.Model} sold");
                 cars.Remove(carToSell);
@@ -199,8 +196,7 @@ namespace CarDealershipFull
         {
             if (cars.Count == 0)
             {
-                Console.WriteLine("There are no cars available in the system to rent.");
-                return;
+                throw new CarNotFoundException("There are no cars available in the system to rent.");
             }
 
             Console.WriteLine("-------- Available Cars for Rent --------");

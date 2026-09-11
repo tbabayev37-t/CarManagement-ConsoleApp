@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CarDealershipFull.Excaptions;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -16,7 +17,7 @@ namespace CarDealershipFull
         public void Withdraw(decimal amount, string description)
         {
             if (amount <= 0) throw new ArgumentException("The amount must be greater than zero!");
-            if (amount > Balance) throw new ArgumentException("There are not money in balance! The salon is closing...");
+            if (amount > Balance) throw new InsufficientFundsException();
             Balance -= amount;
 
             Transactions.Add(new Transaction

@@ -1,19 +1,22 @@
 ﻿using CarDealershipFull;
+using CarDealershipFull.Excaptions;
 
 Bank mainBank = new Bank(500000);
 DealershipService saleService = new DealershipService(mainBank);
 DealershipService rentService = new DealershipService(mainBank);
 
-
 Console.WriteLine("----------Welcome to Cars World----------");
-Console.WriteLine("1.Car Sale");
-Console.WriteLine("2.Rent a Car");
-Console.WriteLine("3.Bank");
-Console.WriteLine("0.Exit");
+
 bool option = true;
-string choice = Console.ReadLine();
+
 while (option)
 {
+    Console.WriteLine("1.Car Sale");
+    Console.WriteLine("2.Rent a Car");
+    Console.WriteLine("3.Bank");
+    Console.WriteLine("0.Exit");
+    Console.Write("Choose an option: ");
+    string choice = Console.ReadLine();
     switch (choice)
     {
         case "1":
@@ -23,22 +26,85 @@ while (option)
             Console.WriteLine("4.Filter Cars");            
             Console.WriteLine("5.Sort Cars");            
             Console.WriteLine("6.Sell Car");            
-            Console.WriteLine("0.Back");  
+            Console.WriteLine("0.Back");
+            Console.Write("Choose an option: ");
             string choice1 = Console.ReadLine();
             switch (choice1)
             {
                 case "1":
-                    saleService.AddCar();break;
+                    try
+                    {
+                        saleService.AddCar();
+                    }
+                    catch (ArgumentException ex)
+                    {
+                        Console.WriteLine($"Validation Error: {ex.Message}");
+                    }
+                    catch (InsufficientFundsException ex)
+                    {
+                        Console.WriteLine($"Business Error: {ex.Message}");
+                    }
+                    catch (FormatException)
+                    {
+                        Console.WriteLine("Error: Please enter a valid numeric value!");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"An unexpected error occurred: {ex.Message}");
+                    }break;
                 case "2":
-                    saleService.GetAllCars();break;
+                    try
+                    {
+                        saleService.GetAllCars();
+                    }
+                    catch( ArgumentException ex)
+                    {
+                        Console.WriteLine($"Error: {ex.Message}");
+                    }
+                    catch(CarNotFoundException ex)
+                    {
+                        Console.WriteLine($"Error: {ex.Message}");
+                    }
+                    catch(Exception ex)
+                    {
+                        Console.WriteLine($"Error: {ex.Message}");
+                    }
+                   break;
                 case "3":
-                    saleService.DeleteCar(); break;
+                    try
+                    {
+                        saleService.DeleteCar();
+                    }
+                    catch(CarNotFoundException ex)
+                    {
+                        Console.WriteLine($"Error: {ex.Message}");
+                    }
+                    catch(Exception ex)
+                    {
+                        Console.WriteLine($"General error: {ex.Message}");
+                    }
+                     break;
                 case "4":
                     saleService.FilterCars(); break;
                 case "5":
                     saleService.SortCars(); break;
                 case "6":
-                    saleService.SellCar(); break;
+                    try
+                    {
+                        saleService.SellCar();
+                    }
+                    catch (CarNotFoundException ex)
+                    {
+                        Console.WriteLine($"Error: {ex.Message}");
+                    }
+                    catch (FormatException ex)
+                    {
+                        Console.WriteLine($"Error: {ex.Message}");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error: {ex.Message}");
+                    }break;
                 case "0":
                     goto EndOfSubMenu1;
                 default:
@@ -55,21 +121,86 @@ while (option)
             Console.WriteLine("5.Sort Cars");
             Console.WriteLine("6.Sell Car");
             Console.WriteLine("0.Back");
+            Console.Write("Choose an option: ");
             string choice2 = Console.ReadLine();
             switch (choice2)
             {
                 case "1":
-                    saleService.AddCar(); break;
+                    try
+                    {
+                        saleService.AddCar();
+                    }
+                    catch (ArgumentException ex)
+                    {
+                        Console.WriteLine($"Validation Error: {ex.Message}");
+                    }
+                    catch (InsufficientFundsException ex)
+                    {
+                        Console.WriteLine($"Business Error: {ex.Message}");
+                    }
+                    catch (FormatException)
+                    {
+                        Console.WriteLine("Error: Please enter a valid numeric value!");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"An unexpected error occurred: {ex.Message}");
+                    }
+                    break;
                 case "2":
-                    saleService.GetAllCars(); break;
+                    try
+                    {
+                        saleService.GetAllCars();
+                    }
+                    catch (ArgumentException ex)
+                    {
+                        Console.WriteLine($"Error: {ex.Message}");
+                    }
+                    catch (CarNotFoundException ex)
+                    {
+                        Console.WriteLine($"Error: {ex.Message}");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error: {ex.Message}");
+                    }
+                    break;
                 case "3":
-                    saleService.DeleteCar(); break;
+                    try
+                    {
+                        saleService.DeleteCar();
+                    }
+                    catch (CarNotFoundException ex)
+                    {
+                        Console.WriteLine($"Error: {ex.Message}");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"General error: {ex.Message}");
+                    }
+                    break;
                 case "4":
                     saleService.FilterCars(); break;
                 case "5":
                     saleService.SortCars(); break;
                 case "6":
-                    saleService.SellCar(); break;
+                    try
+                    {
+                        saleService.SellCar();
+                    }
+                    catch(CarNotFoundException ex)
+                    {
+                        Console.WriteLine($"Error: {ex.Message}");
+                    }
+                    catch(FormatException ex)
+                    {
+                        Console.WriteLine($"Error: {ex.Message}");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error: {ex.Message}");
+                    }
+                    break;
                 case "0":
                     goto EndOfSubMenu2;
                 default:
@@ -99,13 +230,43 @@ while (option)
                         case "1":
                           Console.Write($"Current balance: {mainBank.Balance} AZN"); break;
                         case "2":
-                            Console.Write("Enter the amount:");
-                            decimal amountD = decimal.Parse(Console.ReadLine());
-                            mainBank.Deposit(amountD, $"{amountD} AZN money added to balance.");break;
+                            try
+                            {
+                                Console.Write("Enter the amount:");
+                                decimal amountD = decimal.Parse(Console.ReadLine());
+                                mainBank.Deposit(amountD, $"{amountD} AZN money added to balance.");
+                            }
+                            catch(ArgumentException ex)
+                            {
+                                Console.WriteLine($"Error: {ex.Message}");
+                            }
+                            break;
                         case "3":
-                            Console.Write("Enter the amount:");
-                            decimal amountW = decimal.Parse(Console.ReadLine());
-                            mainBank.Withdraw(amountW, $"{amountW} AZN withdraw."); break;
+                            try
+                            {
+                                Console.Write("Enter the amount: ");
+                                decimal amountW = decimal.Parse(Console.ReadLine());
+
+                                mainBank.Withdraw(amountW, $"{amountW} AZN withdraw.");
+                                Console.WriteLine("Withdrawal successful!");
+                            }
+                            catch(InsufficientFundsException ex)
+                            {
+                                Console.WriteLine($"Error: {ex.Message}");
+                            }
+                            catch (FormatException)
+                            {
+                                Console.WriteLine("Error: Please enter a valid numeric amount!");
+                            }
+                            catch(ArgumentException ex)
+                            {
+                                Console.WriteLine($"Error: {ex.Message}");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine($"An unexpected error occurred: {ex.Message}");
+                            }
+                            break;
                         case "0":
                             goto BackOption;
                         default:
@@ -151,7 +312,5 @@ while (option)
         default:
             Console.WriteLine("Incorrect choice! Try again.");
             break;
-
     }
-
 }
