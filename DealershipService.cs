@@ -59,21 +59,19 @@ namespace CarDealershipFull
                 Console.WriteLine($"Car {Ac.ID} | {Ac.Brand} | {Ac.Model}| {Ac.Year}| {Ac.CostPrice}AZN| {Ac.SalePrice}AZN| {Ac.IsRented}");
             }
         }
-        public void DeleteCar()  
+        public void DeleteCar(int carId) 
         {
             if(cars.Count == 0)
             {
                 throw new CarNotFoundException();
-            }
-            Console.Write("Enter the deleting car ID: ");
-            int deleteId = Convert.ToInt32(Console.ReadLine());
-            var carToDelete = cars.FirstOrDefault(c=>c.ID == deleteId);
+            }  
+            var carToDelete = cars.FirstOrDefault(c=>c.ID == carId);
             if (carToDelete ==null)
             {
                 throw new CarNotFoundException("This id machine was not found");
             }
             cars.Remove(carToDelete);
-            Console.WriteLine($"{deleteId} ID car was delete");
+            Console.WriteLine($"{carId} ID car was delete");
         }  //masin silmek
         public void FilterCars()    // filtrlemek
         {

@@ -85,7 +85,9 @@ while (option)
                 case "3":
                     try
                     {
-                        saleService.DeleteCar();
+                        Console.Write("Enter the deleting car ID: ");
+                        int deleteId = Convert.ToInt32(Console.ReadLine());
+                        saleService.DeleteCar(deleteId);
                     }
                     catch(CarNotFoundException ex)
                     {
@@ -192,7 +194,9 @@ while (option)
                 case "3":
                     try
                     {
-                        saleService.DeleteCar();
+                        Console.Write("Enter the deleting car ID: ");
+                        int deleteId = Convert.ToInt32(Console.ReadLine());
+                        saleService.DeleteCar(deleteId);
                     }
                     catch (CarNotFoundException ex)
                     {
