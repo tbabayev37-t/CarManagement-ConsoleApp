@@ -228,7 +228,7 @@ while (option)
                     switch (bankOption)
                     {
                         case "1":
-                          Console.Write($"Current balance: {mainBank.Balance} AZN"); break;
+                          Console.WriteLine($"Current balance: {mainBank.Balance} AZN"); break;
                         case "2":
                             try
                             {

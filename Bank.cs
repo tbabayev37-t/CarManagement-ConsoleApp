@@ -12,8 +12,12 @@ namespace CarDealershipFull
         {
             Balance = initialBalance;
         }
+        public Bank()
+        {
+            
+        }
 
-        List<Transaction> Transactions { get; set; } = new();
+        public List<Transaction> Transactions { get; set; } = new();
         public void Withdraw(decimal amount, string description)
         {
             if (amount <= 0) throw new ArgumentException("The amount must be greater than zero!");
