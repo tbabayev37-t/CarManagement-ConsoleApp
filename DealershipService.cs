@@ -1,4 +1,5 @@
 ﻿using CarDealershipFull.Excaptions;
+using CarDealershipFull.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,10 +13,17 @@ namespace CarDealershipFull
         public DealershipService(Bank bank)
         {
             _bank = bank;
+            cars = FileHelper.LoadCars();
 
-            cars.Add(new Car { ID = 1, Brand = "BMW", Model = "M5", Year = 2022, CostPrice = 40000, SalePrice = 55000, IsRented = false });
-            cars.Add(new Car { ID = 2, Brand = "Mercedes", Model = "C200", Year = 2020, CostPrice = 25000, SalePrice = 35000, IsRented = false });
-            cars.Add(new Car { ID = 3, Brand = "Toyota", Model = "Camry", Year = 2021, CostPrice = 20000, SalePrice = 28000, IsRented = false });
+            if(cars.Count == 0)
+            {
+                cars.Add(new Car { ID = 1, Brand = "BMW", Model = "M5", Year = 2022, CostPrice = 40000, SalePrice = 55000, IsRented = false });
+                cars.Add(new Car { ID = 2, Brand = "Mercedes", Model = "C200", Year = 2020, CostPrice = 25000, SalePrice = 35000, IsRented = false });
+                cars.Add(new Car { ID = 3, Brand = "Toyota", Model = "Camry", Year = 2021, CostPrice = 20000, SalePrice = 28000, IsRented = false }
+                );
+                FileHelper.SaveCars(cars);
+            }   
+            
         }
         public void AddCar(int carId, string brandName, string model, int year, decimal costPrice, decimal salePrice)
         {
@@ -45,6 +53,7 @@ namespace CarDealershipFull
                 IsRented = false
             };
             cars.Add(newCar);
+            FileHelper.SaveCars( cars );
             Console.WriteLine($"Successful! {brandName} {model} has been added to the system. Current balance: {_bank.Balance} AZN");
         }  // masin elave etmek
         public void GetAllCars()  // masinlara baxmaq
@@ -71,6 +80,7 @@ namespace CarDealershipFull
                 throw new CarNotFoundException("This id machine was not found");
             }
             cars.Remove(carToDelete);
+            FileHelper.SaveCars(cars );
             Console.WriteLine($"{carId} ID car was delete");
         }  //masin silmek
         public void FilterCars()    // filtrlemek
@@ -167,6 +177,7 @@ namespace CarDealershipFull
                 }
                 _bank.Deposit(carToSell.SalePrice, $"{carToSell.Brand} {carToSell.Model} sold");
                 cars.Remove(carToSell);
+                FileHelper.SaveCars(cars);
                 Console.WriteLine($"Success! {carToSell.Brand} {carToSell.Model} was sold for {carToSell.SalePrice} AZN.");
             }
             else
@@ -203,6 +214,7 @@ namespace CarDealershipFull
                 }
                 carToRent.IsRented = true;
                 _bank.Deposit(carToRent.SalePrice, $"{carToRent.Brand} {carToRent.Model} rented out");
+                FileHelper.SaveCars(cars);
 
                 Console.WriteLine($"Success! {carToRent.Brand} {carToRent.Model} was rented for {carToRent.SalePrice} AZN.");
             }

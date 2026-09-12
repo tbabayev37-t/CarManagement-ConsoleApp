@@ -128,114 +128,36 @@ while (option)
         EndOfSubMenu1:
          break;
         case "2":
-            Console.WriteLine("1.Add Car");
-            Console.WriteLine("2.View Cars");
-            Console.WriteLine("3.Delete Car");
-            Console.WriteLine("4.Filter Cars");
-            Console.WriteLine("5.Sort Cars");
-            Console.WriteLine("6.Sell Car");
-            Console.WriteLine("0.Back");
+            Console.WriteLine("\n--- Rent a Car Menu ---");
+            Console.WriteLine("1. View Available Cars for Rent");
+            Console.WriteLine("2. Rent a Car Now");
+            Console.WriteLine("0. Back");
             Console.Write("Choose an option: ");
             string choice2 = Console.ReadLine();
+
             switch (choice2)
             {
                 case "1":
-                    try
-                    {
-                        Console.Write("Car ID: ");
-                        int carId = Convert.ToInt32(Console.ReadLine());
-                        Console.Write("Car Brand: ");
-                        string brandName = Console.ReadLine();
-                        Console.Write("Car Model: ");
-                        string model = Console.ReadLine();
-                        Console.Write("Car Year: ");
-                        int year = Convert.ToInt32(Console.ReadLine());
-                        Console.Write("Cost price: ");
-                        int costPrice = Convert.ToInt32(Console.ReadLine());
-                        Console.Write("Sale price: ");
-                        int salePrice = Convert.ToInt32(Console.ReadLine());
-                        saleService.AddCar(carId, brandName, model, year, costPrice, salePrice);
-                    }
-                    catch (ArgumentException ex)
-                    {
-                        Console.WriteLine($"Validation Error: {ex.Message}");
-                    }
-                    catch (InsufficientFundsException ex)
-                    {
-                        Console.WriteLine($"Business Error: {ex.Message}");
-                    }
-                    catch (FormatException)
-                    {
-                        Console.WriteLine("Error: Please enter a valid numeric value!");
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"An unexpected error occurred: {ex.Message}");
-                    }
+                    try { rentService.GetAllCars(); }
+                    catch (Exception ex) { Console.WriteLine($"Error: {ex.Message}"); }
                     break;
+
                 case "2":
                     try
                     {
-                        saleService.GetAllCars();
+                        // BURADA MƏHZ SƏNİN O YAZDIĞIN RENTCAR METODU İŞLƏYİR!
+                        rentService.RentCar();
                     }
-                    catch (ArgumentException ex)
-                    {
-                        Console.WriteLine($"Error: {ex.Message}");
-                    }
-                    catch (CarNotFoundException ex)
-                    {
-                        Console.WriteLine($"Error: {ex.Message}");
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"Error: {ex.Message}");
-                    }
+                    catch (Exception ex) { Console.WriteLine($"Error: {ex.Message}"); }
                     break;
-                case "3":
-                    try
-                    {
-                        Console.Write("Enter the deleting car ID: ");
-                        int deleteId = Convert.ToInt32(Console.ReadLine());
-                        saleService.DeleteCar(deleteId);
-                    }
-                    catch (CarNotFoundException ex)
-                    {
-                        Console.WriteLine($"Error: {ex.Message}");
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"General error: {ex.Message}");
-                    }
-                    break;
-                case "4":
-                    saleService.FilterCars(); break;
-                case "5":
-                    saleService.SortCars(); break;
-                case "6":
-                    try
-                    {
-                        saleService.SellCar();
-                    }
-                    catch(CarNotFoundException ex)
-                    {
-                        Console.WriteLine($"Error: {ex.Message}");
-                    }
-                    catch(FormatException ex)
-                    {
-                        Console.WriteLine($"Error: {ex.Message}");
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"Error: {ex.Message}");
-                    }
-                    break;
+
                 case "0":
-                    goto EndOfSubMenu2;
+                    break; // Ana menyuya qayıdır
+
                 default:
                     Console.WriteLine("Incorrect choice! Try again.");
                     break;
             }
-            EndOfSubMenu2:
             break;
         case "3":
             Console.WriteLine("\n1.Bank Account");
