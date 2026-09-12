@@ -17,30 +17,14 @@ namespace CarDealershipFull
             cars.Add(new Car { ID = 2, Brand = "Mercedes", Model = "C200", Year = 2020, CostPrice = 25000, SalePrice = 35000, IsRented = false });
             cars.Add(new Car { ID = 3, Brand = "Toyota", Model = "Camry", Year = 2021, CostPrice = 20000, SalePrice = 28000, IsRented = false });
         }
-        public void AddCar()
+        public void AddCar(int carId, string brandName, string model, int year, decimal costPrice, decimal salePrice)
         {
-            Console.Write("Car ID: ");
-            int carId = Convert.ToInt32(Console.ReadLine());
-            if (carId < 0) throw new ArgumentException("Invalid Id value!");//1
-
-            Console.Write("Car Brand: ");
-            string brandName = Console.ReadLine();
+            
+            if (carId < 0) throw new ArgumentException("Invalid Id value!");//1           
             if (string.IsNullOrWhiteSpace(brandName)) throw new ArgumentException("Brand name cannot be empty or whitespace.");//2
-
-            Console.Write("Car Model: ");
-            string model = Console.ReadLine();
-            if (string.IsNullOrWhiteSpace(model)) throw new ArgumentException("Model name cannot be empty or whitespace.");//3
-
-            Console.Write("Car Year: ");
-            int year = Convert.ToInt32(Console.ReadLine());
-            if (year < 0 || year >2026) throw new ArgumentException("Invalid Year!");//4
-
-            Console.Write("Cost price: ");
-            int costPrice = Convert.ToInt32(Console.ReadLine());
-            if (costPrice < 0) throw new ArgumentException("Invalid value!");//5
-
-            Console.Write("Sale price: ");
-            int salePrice = Convert.ToInt32(Console.ReadLine());
+            if (string.IsNullOrWhiteSpace(model)) throw new ArgumentException("Model name cannot be empty or whitespace.");//3     
+            if (year < 0 || year >2026) throw new ArgumentException("Invalid Year!");//4   
+            if (costPrice < 0) throw new ArgumentException("Invalid value!");//5    
             if (salePrice < 0) throw new ArgumentException("Invalid value!");//6
 
             if (_bank.Balance < costPrice)

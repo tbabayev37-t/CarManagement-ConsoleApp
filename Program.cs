@@ -34,7 +34,19 @@ while (option)
                 case "1":
                     try
                     {
-                        saleService.AddCar();
+                        Console.Write("Car ID: ");
+                        int carId = Convert.ToInt32(Console.ReadLine());
+                        Console.Write("Car Brand: ");
+                        string brandName = Console.ReadLine();
+                        Console.Write("Car Model: ");
+                        string model = Console.ReadLine();
+                        Console.Write("Car Year: ");
+                        int year = Convert.ToInt32(Console.ReadLine());
+                        Console.Write("Cost price: ");
+                        int costPrice = Convert.ToInt32(Console.ReadLine());
+                        Console.Write("Sale price: ");
+                        int salePrice = Convert.ToInt32(Console.ReadLine());
+                        saleService.AddCar(carId,brandName,model,year,costPrice,salePrice);
                     }
                     catch (ArgumentException ex)
                     {
@@ -128,7 +140,19 @@ while (option)
                 case "1":
                     try
                     {
-                        saleService.AddCar();
+                        Console.Write("Car ID: ");
+                        int carId = Convert.ToInt32(Console.ReadLine());
+                        Console.Write("Car Brand: ");
+                        string brandName = Console.ReadLine();
+                        Console.Write("Car Model: ");
+                        string model = Console.ReadLine();
+                        Console.Write("Car Year: ");
+                        int year = Convert.ToInt32(Console.ReadLine());
+                        Console.Write("Cost price: ");
+                        int costPrice = Convert.ToInt32(Console.ReadLine());
+                        Console.Write("Sale price: ");
+                        int salePrice = Convert.ToInt32(Console.ReadLine());
+                        saleService.AddCar(carId, brandName, model, year, costPrice, salePrice);
                     }
                     catch (ArgumentException ex)
                     {
